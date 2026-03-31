@@ -4,26 +4,17 @@
 
 These ETFs were chosen to represent multiple major asset classes: 
 1. DBC: broad commodities
-   
 2. EEM: emerging market equities
-   
 3. EFA: developed international equities
-   
 4. GLD: gold
-   
 5. HYG: high-yield corporate bonds
-   
 6. IEF: intermediate-term U.S. Treasuries
 7. IWM: U.S. small-cap equities
 8. LQD: investment-grade corporate bonds
-16.
-17. QQQ: U.S. large-cap growth equities / Nasdaq-100
-18.
-19. SPY: broad U.S. large-cap equities / S&P 500
-20.
-21. TLT: long-term U.S. Treasuries
-22.
-23. VNQ: U.S. real estate / REITs
+9. QQQ: U.S. large-cap growth equities / Nasdaq-100
+10. SPY: broad U.S. large-cap equities / S&P 500
+11. TLT: long-term U.S. Treasuries
+12. VNQ: U.S. real estate / REITs
 
 The script performs the following steps: 
 1. Downloads historical ETF data: Historical daily price data is pulled using yfinance.
