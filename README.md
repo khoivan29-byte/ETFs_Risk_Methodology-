@@ -1,1 +1,1 @@
-# This is where I begin my journey of learning quantitative finance. 
+# This is where I begin my journey of learning quantitative finance: A portfolio risk analytics project that builds a 12-ETF equal-weight portfolio, measures core risk and performance metrics, and presents the results in an Excel dashboard.
