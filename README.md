@@ -1,6 +1,6 @@
 # The file in this branch, ETFs_Risk_Monitoring_Dashboard.py, is to build the project’s raw input data. It pulls historical market data for 12 ETFs, extracts adjusted close prices, computes daily returns, and exports clean files that can be used for portfolio construction, risk metric calculation, and dashboard updates.
 
-# The script downloads data for the following 12 ETFs: DBC, EEM, EFA, GLD, HYG, IEF, IWM, LQD, QQQ, SPY, TLT, and VNQ. 
+# The script downloads data for the following 12 ETFs: DBC, EEM, EFA, GLD, HYG, IEF, IWM, LQD, QQQ, SPY, TLT, and VNQ. The time frame that I use for this project is from 03/02/2021 to 02/27/2026. The script is written to reflect real-time data instead of a fixed interval from 03/02/2021 to 02/27/2026. In other words, this script pulls data in a 5-year interval as of the day that users run it. 
 
 These ETFs were chosen to represent multiple major asset classes: 
 1. DBC: broad commodities
