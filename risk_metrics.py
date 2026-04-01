@@ -2,23 +2,22 @@ import os
 import numpy as np
 import pandas as pd
 
-# --- Settings ---
-CONF_LEVEL = 0.95 #confidence level for VaR/CVaR
-ROLLING_WINDOW = 30 #for rolling volatility (in days)
-TRADING_DAYS = 252 #typical number of trading days in a year
+CONF_LEVEL = 0.95 #Confidence level for VaR/CVaR
+ROLLING_WINDOW = 30 #For rolling volatility (in days)
+TRADING_DAYS = 252 #Typical number of trading days in a year
 
-# --- Load data from Step 1 ---
+#Load data from Step 1
 prices = pd.read_csv("data/prices.csv", index_col=0, parse_dates=True) 
 returns = pd.read_csv("data/returns.csv", index_col=0, parse_dates=True)
 
-# Align dates (safety)
+#Align dates
 common_index = prices.index.intersection(returns.index)
 prices = prices.loc[common_index].sort_index()
 returns = returns.loc[common_index].sort_index()
 
 tickers = list(returns.columns)
 
-# --- Helper functions ---
+#Risk metrics functions
 def max_drawdown_from_returns(r: pd.Series) -> float:
     """Max drawdown from return series (as a negative number)."""
     equity = (1 + r.fillna(0)).cumprod() 
@@ -31,13 +30,13 @@ def hist_var_cvar(r: pd.Series, conf: float = 0.95):
     x = r.dropna().values
     if len(x) < 10:
         return np.nan, np.nan
-    q = np.quantile(x, 1 - conf)          # left tail return (negative usually)
-    var = -q                               #convert to positive loss
+    q = np.quantile(x, 1 - conf)          #Left tail return (negative usually)
+    var = -q                               #Convert to positive loss
     tail = x[x <= q]
     cvar = -tail.mean() if len(tail) > 0 else np.nan
     return var, cvar
 
-# --- Per-ETF summary metrics ---
+#Per-ETF summary metrics
 summary_rows = []
 for t in tickers:
     r = returns[t]
@@ -60,7 +59,7 @@ for t in tickers:
 
 summary = pd.DataFrame(summary_rows).set_index("Ticker").sort_index()
 
-# --- Portfolio (equal-weight) metrics ---
+#Portfolio (equal-weight) metrics
 w = np.repeat(1/len(tickers), len(tickers))
 port_ret = returns[tickers].fillna(0).dot(w)
 port_ret_df = pd.DataFrame({"PORT_EQW": port_ret})
@@ -81,25 +80,25 @@ portfolio_row = pd.DataFrame([{
 
 summary_with_port = pd.concat([summary, portfolio_row], axis=0)
 
-# --- Corr matrix ---
+#Corr matrix
 corr = returns[tickers].corr()
 
-# --- Rolling 30D volatility (annualized) ---
+#Rolling 30D volatility (annualized)
 rolling_vol = returns[tickers].rolling(ROLLING_WINDOW).std() * np.sqrt(TRADING_DAYS)
 
-# --- Drawdowns (per ETF + portfolio) ---
+#Drawdowns  
 equity_curves = (1 + returns[tickers].fillna(0)).cumprod()
 peaks = equity_curves.cummax()
 drawdowns = equity_curves / peaks - 1
 
-# Portfolio drawdown
+#Portfolio drawdown
 port_equity = (1 + port_ret.fillna(0)).cumprod()
 port_peak = port_equity.cummax()
 port_dd = port_equity / port_peak - 1
 drawdowns["PORT_EQW"] = port_dd
 
-# --- VaR/CVaR time series (optional simple rolling VaR) ---
-# Here: rolling historical VaR/CVaR using a 252-day window
+#VaR/CVaR time series 
+#Rolling historical VaR/CVaR using a 252-day window
 ROLL_VAR_WINDOW = 252
 
 def rolling_hist_var(series: pd.Series, conf=0.95, window=252):
@@ -120,11 +119,11 @@ for t in tickers:
     var_ts[t] = rolling_hist_var(returns[t].dropna(), CONF_LEVEL, ROLL_VAR_WINDOW)
     cvar_ts[t] = rolling_hist_cvar(returns[t].dropna(), CONF_LEVEL, ROLL_VAR_WINDOW)
 
-# Portfolio rolling VaR/CVaR
+#Portfolio rolling VaR/CVaR
 var_ts["PORT_EQW"] = rolling_hist_var(port_ret, CONF_LEVEL, ROLL_VAR_WINDOW)
 cvar_ts["PORT_EQW"] = rolling_hist_cvar(port_ret, CONF_LEVEL, ROLL_VAR_WINDOW)
 
-# --- Export to Excel ---
+#Export to Excel
 os.makedirs("outputs", exist_ok=True)
 out_path = "outputs/risk_metrics.xlsx"
 
