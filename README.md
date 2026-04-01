@@ -1,4 +1,4 @@
-#The file in this branch, risk_metrics.py, transforms market return data into portfolio performance analytics. It builds the equal-weight ETF portfolio, computes performance and downside-risk measures, and generates the metric outputs used in the final Excel dashboard.
+# The file in this branch, risk_metrics.py, transforms market return data into portfolio performance analytics. It builds the equal-weight ETF portfolio, computes performance and downside-risk measures, and generates the metric outputs used in the final Excel dashboard.
 
 The script performs the main portfolio analytics tasks:
 
