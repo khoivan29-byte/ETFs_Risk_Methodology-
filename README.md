@@ -1,7 +1,7 @@
 # Earlier branches of the project focus on pulling ETF market data and calculating risk metrics. This branch focuses on how those results are organized, displayed, and communicated. It includes the completed Excel dashboard workbook and a PDF export of the main dashboard page. 
 
 The dashboard presents the portfolio’s risk profile through these metrics and visual analysis:
-  Annualized Volatility
+  - Annualized Volatility
   Maximum Drawdown
   1-day VaR95
   1-day CVaR95
