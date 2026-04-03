@@ -2,15 +2,15 @@
 
 The dashboard presents the portfolio’s risk profile through these metrics and visual analysis:
   - Annualized Volatility
-  Maximum Drawdown
-  1-day VaR95
-  1-day CVaR95
-  Average Correlation to SPY
-  Highest-correlation ETF Pair
-  Portfolio Return Chart
-  Drawdown Chart
-  Correlation Heatmap
-  Maximum Drawdown Episode Section
+  - Maximum Drawdown
+  - 1-day VaR95
+  - 1-day CVaR95
+  - Average Correlation to SPY
+  - Highest-correlation ETF Pair
+  - Portfolio Return Chart
+  - Drawdown Chart
+  - Correlation Heatmap
+  - Maximum Drawdown Episode Section
 
 Inside the workbook, I import data from risk_metrics.xlsx and calculate metrics such as equity (growth of $10,000), peak, drawdown, and returns, on the cumulative scale in the Portfolio_Calc sheet. For the drawdowns, I also use the daily drawdowns to find the Peak to Recovery and Peak to Trough periods in terms of trading days and calendar days. 
 
